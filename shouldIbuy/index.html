@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="author" content="Natalia Kmiecik">
+  <title>Should I buy it?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+  <h1>Should I buy it?</h1>
+  <input type="text" id="price" class="input_name" placeholder="price" style="width:5vw;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+  <table id="allQs">
+    <tr>
+      <th>Question</th>
+      <th>Yes</th>
+      <th>Possibly</th>
+      <th>No</th>
+    </tr>
+    <tr>
+      <td>Is it going to be useful everyday?</td>
+      <td><input type="radio" value="2" name="q1" ></td>
+      <td><input type="radio" value="1" name="q1"/></td>
+      <td><input type="radio" value="0" name="q1"/></td>
+    </tr>
+    <tr>
+      <td>Is it going to be useful next year?</td>
+      <td><input type="radio" value="2" name="q2"></td>
+      <td><input type="radio" value="1" name="q2"/></td>
+      <td><input type="radio" value="0" name="q2"/></td>
+    </tr>
+    <tr>
+      <td>Is it going to make you more productive?</td>
+      <td><input type="radio" value="2" name="q3"></td>
+      <td><input type="radio" value="1" name="q3"/></td>
+      <td><input type="radio" value="0" name="q3"/></td>
+    </tr>
+    <tr>
+      <td>Is it going to benefit more than 1 person?</td>
+      <td><input type="radio" value="2" name="q4"></td>
+      <td><input type="radio" value="1" name="q4"/></td>
+      <td><input type="radio" value="0" name="q4"/></td>
+    </tr>
+    <tr>
+      <td>Will it make your life better?</td>
+      <td><input type="radio" value="2" name="q5"></td>
+      <td><input type="radio" value="1" name="q5"/></td>
+      <td><input type="radio" value="0" name="q5"/></td>
+    </tr>
+    <tr>
+      <td>Is it going to benefit your health?</td>
+      <td><input type="radio" value="2" name="q6"></td>
+      <td><input type="radio" value="1" name="q6"/></td>
+      <td><input type="radio" value="0" name="q6"/></td>
+    </tr>
+    <tr>
+      <td>Is it going to be useful for work/hobby?</td>
+      <td><input type="radio" value="2" name="q7"></td>
+      <td><input type="radio" value="1" name="q7"/></td>
+      <td><input type="radio" value="0" name="q7"/></td>
+    </tr>
+    <tr>
+      <td>Is it going to be used more than once?</td>
+      <td><input type="radio" value="2" name="q8"></td>
+      <td><input type="radio" value="1" name="q8"/></td>
+      <td><input type="radio" value="0" name="q8"/></td>
+    </tr>
+    <tr>
+      <td>Is it going to save you money in the future?</td>
+      <td><input type="radio" value="2" name="q9"/></td>
+      <td><input type="radio" value="1" name="q9"/></td>
+      <td><input type="radio" value="0" name="q9"/></td>
+    </tr>
+  </table>
+  <button id="next" class="button-89" role="button" onclick="calc()">Next</button>
+  <button id="again" style="display: none;" class="button-89" role="button" onclick="startAgain()">Start again</button>
+  <div id="result"></div>
+  <img id="imgResult" style="display: none; margin-left: auto;
+  margin-right: auto;" src="">
+  <script type="text/javascript" src="script.js"></script>  
+</body>
