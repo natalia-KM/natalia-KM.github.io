@@ -16,7 +16,7 @@ function calc() {
     let necessity = 0;
     let cost = 0;
 
-    for(let i=1; i<10; i++) {
+    for(let i=1; i<11; i++) {
         const qs = document.getElementsByName('q'+i);
         for(let radio of qs) {
             if(radio.checked) {
