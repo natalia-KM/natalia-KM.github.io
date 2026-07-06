@@ -139,7 +139,7 @@ body {
 .bar select option { background: var(--bg); color: var(--fg); }
 
 /* ---- the session ---- */
-main { max-width: 82ch; margin: 0 auto; padding: clamp(1.4rem, 4vw, 2.6rem) clamp(0.9rem, 4vw, 1.6rem) 6rem; }
+main { max-width: 82ch; margin: 0 auto; padding: clamp(1.4rem, 4vw, 2.6rem) clamp(0.9rem, 4vw, 1.6rem) 3rem; }
 a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
 a:hover, a:focus-visible { color: var(--bright); border-color: var(--bright); outline: none; }
 
@@ -228,11 +228,16 @@ a:hover, a:focus-visible { color: var(--bright); border-color: var(--bright); ou
 .cursor { display: inline-block; width: 0.62ch; height: 1.05em; translate: 0 0.16em; margin-left: 1px; background: var(--bright); animation: blink 1.05s steps(1) infinite; }
 @keyframes blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
-#echo { margin-top: 0.6rem; }
+#echo { margin-bottom: 0.6rem; }
+#echo:empty { margin-bottom: 0; }
 #echo .r { color: var(--fg); white-space: pre-wrap; }
 #echo .r .hl { color: var(--bright); }
 #echo .r .ok { color: var(--ok); }
 #echo .r .er { color: var(--err); }
+/* echoed prompt prefix on completed commands — matches the live label */
+#echo .r .u { color: var(--ok); }
+#echo .r .h { color: var(--bright); }
+#echo .r .p { color: var(--accent); }
 
 /* bottom status line */
 .status {

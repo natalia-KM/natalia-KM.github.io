@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { identity } from "../content";
 import { isThemeId, SIBLINGS, THEMES, type ThemeId } from "../themes";
 
@@ -61,6 +61,10 @@ const EXIT = [
 ];
 const pick = (options: string[]): string => options[Math.floor(Math.random() * options.length)];
 
+// The full shell prompt, mirrored in the echo log so completed commands read
+// like real terminal history (matches the live <label> below).
+const PROMPT = `<span class="u">${identity.user}</span>@<span class="h">${identity.host}</span> <span class="p">~</span> %`;
+
 /** The live terminal at the bottom: an input plus an echo log of results. */
 export function CommandLine({
   themeId,
@@ -77,10 +81,17 @@ export function CommandLine({
   const idRef = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const measureCanvas = useRef<HTMLCanvasElement | null>(null);
+  const navigatedRef = useRef(false);
 
   const reduce =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Focus the prompt on load so it's ready to type in. `preventScroll` keeps the
+  // page at the top (boot/intro) instead of jumping down to the terminal.
+  useEffect(() => {
+    inputRef.current?.focus({ preventScroll: true });
+  }, []);
 
   // Size the input to its content so the block cursor tracks the typed text.
   // Canvas measurement has no layout side-effects (an off-screen DOM measurer
@@ -108,6 +119,7 @@ export function CommandLine({
     (selector: string) => {
       const el = document.querySelector(selector);
       if (!el) return;
+      navigatedRef.current = true;
       const y = el.getBoundingClientRect().top + window.scrollY - 56;
       window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
     },
@@ -118,7 +130,7 @@ export function CommandLine({
     (raw: string) => {
       const trimmed = raw.trim();
       if (!trimmed) return;
-      print(`<span class="hl">%</span> ${trimmed.replace(/</g, "&lt;")}`);
+      print(`${PROMPT} ${trimmed.replace(/</g, "&lt;")}`);
 
       const lower = trimmed.toLowerCase();
       const base = lower.split(/\s+/)[0];
@@ -235,8 +247,18 @@ export function CommandLine({
   );
 
   return (
-    <section className="block" id="prompt">
-      <div className="live" onClick={() => inputRef.current?.focus()}>
+    <section className="block" id="prompt" onClick={() => inputRef.current?.focus()}>
+      <div id="echo">
+        {showHint && (
+          <span className="cmt" style={{ display: "block" }}>
+            type `help` for commands — or just scroll
+          </span>
+        )}
+        {lines.map((line) => (
+          <div className="r" key={line.id} dangerouslySetInnerHTML={{ __html: line.html }} />
+        ))}
+      </div>
+      <div className="live">
         <label htmlFor="cmd">
           <span className="u">{identity.user}</span>@<span className="h">{identity.host}</span>{" "}
           <span className="p">~</span> %
@@ -255,22 +277,23 @@ export function CommandLine({
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
+              navigatedRef.current = false;
               run(value);
               setValue("");
+              // Keep the prompt pinned to the bottom after output-only commands;
+              // commands that jump to a section (they set navigatedRef) are left alone.
+              if (!navigatedRef.current) {
+                requestAnimationFrame(() =>
+                  window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: reduce ? "auto" : "smooth",
+                  }),
+                );
+              }
             }
           }}
         />
         <span className="cursor" />
-      </div>
-      <div id="echo">
-        {showHint && (
-          <span className="cmt" style={{ display: "block" }}>
-            type `help` for commands — or just scroll
-          </span>
-        )}
-        {lines.map((line) => (
-          <div className="r" key={line.id} dangerouslySetInnerHTML={{ __html: line.html }} />
-        ))}
       </div>
     </section>
   );
