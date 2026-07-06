@@ -1,0 +1,13 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# editor / os
+.idea
+.vscode
+.DS_Store
+*.stackdump
+
+# design handoff, not part of the app
+portfolio-standalone.html
