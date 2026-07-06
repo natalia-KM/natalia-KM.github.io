@@ -10,8 +10,7 @@ export const identity = {
   email: "natalia.km47@gmail.com",
   github: "https://github.com/natalia-KM",
   githubLabel: "github.com/natalia-KM",
-  // TODO: replace with your real LinkedIn URL before launch
-  linkedin: "https://www.linkedin.com/in/YOUR-LINKEDIN",
+  linkedin: "https://www.linkedin.com/in/natalia-kmiecik-02a104164/",
   linkedinLabel: "in/natalia-kmiecik",
 };
 
