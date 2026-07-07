@@ -12,9 +12,10 @@ export function Whoami() {
           {identity.nameLines[1]}
         </div>
         <p className="tagline">
-          {identity.role}{" "}
+          {identity.role}
+          <br />
           <span className="loc">
-            // {identity.location} // {identity.student}
+            /* {identity.location} - {identity.student} */
           </span>
         </p>
       </div>
